@@ -43,62 +43,67 @@ let handler = async (m, { conn, usedPrefix, command, args }) => {
       }
     });
            let isiMenu = []
-          let objekk = Object.keys(tagCount)
-          Object.entries(tagCount).map(([key, value]) => isiMenu.push({
-          header: ` list cmd ${key}  `,
-                    title: `📌 إظهار قائمة أوامر [ ${key} ]`,
-                    description: `عدد ${value} الميزات`,
-                    id: ".menu " + key,
-                    })
-          ).join();
-          const datas = {
-    title: "أنقر هنا !",
-    sections: [{
-            title: "جميع الأوامر الخاصة بالبوت",
-            highlight_label: "إظهار كافة الميزات",
-            rows: [{
-                    header: " All Menu",
-                    title: "جميع الأوامر الخاصة بالبوت",
-                    description: "",
-                    id: ".menu all",
-                }],
-        },
-        {
-            title: 'لائحة الأوامر ',
-            highlight_label: "الائحة",
-            rows: [...isiMenu]
-        },
-        {
-            title: 'معلومات عن البوت',
-            highlight_label: "معلومة",
-            rows: [
-            {
-                    header: "سكريبت البوت",
-                    title: "معلومات حول سكريبت البوت",
-                    description: "",
-                    id: ".sc",
-                },
-            {
-                    header: "Info Owner",
-                    title: "معلومات عن صاحب البوت",
-                    description: "",
-                    id: ".owner",
-                },
-            {
-                    header: "معلومات الميزة الإجمالية",
-                    title: "المعلومات المتعلقة بالميزات الإجمالية للبوت",
-                    description: "",
-                    id: ".totalfitur",
-                },
-            {
-                    header: "معلومات سرعة الاستجابة",
-                    title: "معلومات بخصوص سرعة استجابة الروبوت",
-                    description: "",
-                    id: ".os",
-                }
-                ]
-        }
-    ]
+
+Object.entries(tagCount).map(([key, value]) =>
+  isiMenu.push({
+    header: `${key.toUpperCase()} MENU`,
+    title: `🟢 ${key}`,
+    description: `${value} Commands`,
+    id: `.menu ${key}`,
+  })
+)
+
+const datas = {
+  title: "ℂ𝕃𝕀ℂ𝕂 ℍ𝔼ℝ𝔼",
+  sections: [
+    {
+      title: "ALL COMMANDS",
+      highlight_label: "Features",
+      rows: [
+        {
+          header: "MAIN MENU",
+          title: "Show All Commands",
+          description: "Display all bot features",
+          id: ".menu all",
+        }
+      ],
+    },
+    {
+      title: "COMMAND LIST",
+      highlight_label: "Menu",
+      rows: [...isiMenu]
+    },
+    {
+      title: "BOT INFO",
+      highlight_label: "Info",
+      rows: [
+        {
+          header: "SCRIPT",
+          title: "Bot Script",
+          description: "",
+          id: ".sc",
+        },
+        {
+          header: "OWNER",
+          title: "Bot Owner",
+          description: "",
+          id: ".owner",
+        },
+        {
+          header: "FEATURES",
+          title: "Total Features",
+          description: "",
+          id: ".totalfitur",
+        },
+        {
+          header: "SPEED",
+          title: "Response Speed",
+          description: "",
+          id: ".os",
+        }
+      ]
+    }
+  ]
 };
 
   let objek = Object.values(db.data.stats).map(v => v.success)
@@ -123,7 +128,7 @@ let handler = async (m, { conn, usedPrefix, command, args }) => {
    let tUser = Object.keys(db.data.users).length;
    let userReg = Object.values(global.db.data.users).filter(user => user.registered == true).length
    
-let headers = `إعتبرني : رفيقتك ، أستاذتك ،عزيزتك ،التي ستجدها قربك في كل يوم لأجعل لك من نجمة ستة و من استخدام تطبيق الواتساب طعما آخر 🙂‍↕️🧠🗣️\n\n`
+let headers = `_~👋🏻 I'M EMK, YOUR SMART WHATSAPP BOT~_\n`
 
   if (cmd === 'list') {
     const daftarTag = Object.keys(tagCount)
@@ -203,7 +208,7 @@ conn.sendMessage(m.chat, {
           }, {quoted: m});
           } else if (_menu.button) {
           
- conn.sendListImageButton(m.chat, `${headers}`, datas, 'عَنْ أَبِي هُرَيْرَةَ رضي الله تعالى عنه: أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: إِذَا مَاتَ ابنُ آدم انْقَطَعَ عَنْهُ عَمَلُهُ إِلَّا مِنْ ثَلَاثٍ: صَدَقَةٍ جَارِيَةٍ، أو عِلْمٍ يُنْتَفَعُ بِهِ، أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ', thumbnail)
+ conn.sendListImageButton(m.chat, `${headers}`, datas, '_BY KIM SUN OO_', thumbnail)
           }
   } else if (tagCount[cmd]) {
     const daftarHelp = tagHelpMapping[cmd].map((helpItem, index) => {
@@ -276,7 +281,7 @@ conn.sendMessage(m.chat, {
             },
           }, {quoted: m});
           } else if (_menu.button) {
-          conn.sendListImageButton(m.chat, `IM SILANA LITE AI\n\n${list2}`, datas, wm, thumbnail)
+          conn.sendListImageButton(m.chat, `/>_MD BOT EMK_\n\n${list2}`, datas, wm, thumbnail)
           }
           } else if (cmd === 'all') {
     let name = m.pushName || conn.getName(m.sender)
@@ -350,7 +355,7 @@ conn.sendMessage(m.chat, {
             },
           }, {quoted: m});
           } else if (_menu.button) {
-          conn.sendListImageButton(m.chat, `IM SILANA LITE AI\n${all}`, datas, 'instagram.com/noureddine_ouafy', thumbnail)
+          conn.sendListImageButton(m.chat, `/>_MD BOT EMK_\n${all}`, datas, 'https://wa.me/qr/FFA4RBEQZQG6O1/', thumbnail)
           }
   } else {
   await conn.reply(m.chat, `"'${cmd}' could not be found. Use commands '${command} list' atau '${command} all' to see the available menu.`,m);
@@ -367,4 +372,4 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
+           }
