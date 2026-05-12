@@ -1,27 +1,34 @@
-// instagram.com/noureddine_ouafy
 let before = async function (m, { conn, isAdmin, isBotAdmin }) {
-  // Regex for WhatsApp channels and groups
+
   const regex = /https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+|https:\/\/whatsapp\.com\/channel\/[A-Za-z0-9]{22}/
 
   if (regex.test(m.text)) {
-    if (isAdmin) return // Ignore if the sender is an admin
-    if (!isBotAdmin) return // Bot must be admin to delete or remove
 
-    // Send warning message
+    if (isAdmin) return
+
+    if (!isBotAdmin) return
+
     await conn.sendMessage(
       m.chat,
       {
-        text: `⚠️ *تم اكتشاف رابط قناة أو مجموعة!*\n\nالعضو *@${m.sender.split('@')[0]}* تم طرده لأنه خالف قوانين المجموعة وقام بإرسال روابط.\n\n🚫 هذا التصرف ممنوع تمامًا.`,
+        text: `⚠️ *Channel or group link detected!*\n\nMember *@${m.sender.split('@')[0]}* has been removed for violating the group rules by sending links.\n\n🚫 This action is strictly prohibited.`,
         mentions: [m.sender]
       },
       { quoted: m }
     )
 
-    // Delete the message containing the link
-    await conn.sendMessage(m.chat, { delete: m.key })
+    await conn.sendMessage(
+      m.chat,
+      {
+        delete: m.key
+      }
+    )
 
-    // Kick the user who sent the link
-    await conn.groupParticipantsUpdate(m.chat, [m.sender], "remove")
+    await conn.groupParticipantsUpdate(
+      m.chat,
+      [m.sender],
+      "remove"
+    )
   }
 }
 
