@@ -1,82 +1,127 @@
-// plugin by Const Offmon = Lana;
-// instagram.com/noureddine_ouafy
-
 import { prepareWAMessageMedia } from '@adiwajshing/baileys'
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
+
     if (!text && !m.quoted) {
-        return m.reply(`Example: ${usedPrefix + command} <text>\nor reply to a photo/video/audio`)
+        return m.reply(
+            `Example:\n${usedPrefix + command} Hello\n\n` +
+            `or reply to image / video / audio`
+        )
     }
 
     try {
-        // TEXT ONLY
+
+        // Text Status
         if (text) {
+
             await conn.relayMessage(
                 m.chat,
                 {
                     groupStatusMessageV2: {
-                        message: { conversation: text }
+                        message: {
+                            extendedTextMessage: {
+                                text
+                            }
+                        }
                     }
                 },
                 {}
             )
-            return m.reply("Done")
+
+            return m.reply('Text status uploaded successfully')
         }
 
-        // MEDIA (IF QUOTED)
+        // Media Status
         if (m.quoted) {
+
             const mime = m.quoted.mimetype || ''
+
             const buffer = await m.quoted.download()
 
-            if (!buffer) return m.reply("No media available for upload")
+            if (!buffer) {
+                return m.reply('Failed to download media')
+            }
 
-            let media
+            let media = {}
 
+            // Image
             if (/image/.test(mime)) {
+
                 media = await prepareWAMessageMedia(
-                    { image: buffer },
-                    { upload: conn.waUploadToServer }
+                    {
+                        image: buffer
+                    },
+                    {
+                        upload: conn.waUploadToServer
+                    }
                 )
-            } else if (/video/.test(mime)) {
+            }
+
+            // Video
+            else if (/video/.test(mime)) {
+
                 media = await prepareWAMessageMedia(
-                    { video: buffer },
-                    { upload: conn.waUploadToServer }
+                    {
+                        video: buffer
+                    },
+                    {
+                        upload: conn.waUploadToServer
+                    }
                 )
-            } else if (/audio/.test(mime)) {
+            }
+
+            // Audio
+            else if (/audio/.test(mime)) {
+
                 media = await prepareWAMessageMedia(
                     {
                         audio: buffer,
                         mimetype: 'audio/mpeg',
                         ptt: false
                     },
-                    { upload: conn.waUploadToServer }
+                    {
+                        upload: conn.waUploadToServer
+                    }
                 )
-            } else {
-                return m.reply("Unsupported media format")
             }
 
+            // Unsupported
+            else {
+                return m.reply('Unsupported media type')
+            }
+
+            // Send Status
             await conn.relayMessage(
                 m.chat,
                 {
                     groupStatusMessageV2: {
-                        message: media
+                        message: {
+                            ...media
+                        }
                     }
                 },
                 {}
             )
 
-            return m.reply("Done")
+            return m.reply('Media status uploaded successfully')
         }
+
     } catch (err) {
+
         console.error(err)
-        m.reply("Failed to upload status")
+
+        return m.reply('Failed to upload status')
     }
 }
 
 handler.command = /^upswgc$/i
+
 handler.owner = true
+
 handler.group = true
-handler.help = ["upswgc"]
-handler.tags = ["owner"]
+
+handler.help = ['upswgc']
+
+handler.tags = ['owner']
 
 export default handler
