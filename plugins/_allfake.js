@@ -16,7 +16,7 @@
 ‎
 ‎  let sig = "https://api.whatsapp.com/send?phone=212773608927";
 ‎
-‎  let namebot = "EMK BOT";
+‎  let namebot = "KIM SUN OO";
 ‎
 ‎  try {
 ‎  } catch (e) {
@@ -157,7 +157,7 @@
 ‎}
 ‎
 ‎function ucapan() {
-‎  return "OWNER - KIM SUN OO";
+‎  return "EMK";
 ‎}
 ‎
 ‎function pickRandom(list) {
