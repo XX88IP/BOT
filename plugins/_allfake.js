@@ -46,7 +46,7 @@
 ‎      [
 ‎        owner[0],
 ‎        await conn.getName(owner[0] + "@s.whatsapp.net"),
-‎        "EMK AI",
+‎        "EMK",
 ‎        "https://whatsapp.com",
 ‎        true,
 ‎      ],
