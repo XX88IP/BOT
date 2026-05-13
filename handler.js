@@ -1058,12 +1058,12 @@ export async function handler(chatUpdate) {
                     for (let [jid] of global.owner.filter(([number, _, isDeveloper]) => isDeveloper && number)) {
                         let data = (await this.onWhatsApp(jid))[0] || {}
                         if (data.exists)
-                            m.reply(`_SYSTEM ERROR_
+                            m.reply(` _SYSTEM ERROR_
 
-_From Plugins : ${name}_
-_From Sender : ${m.sender}_
-_From Chat : ${m.chat}_
-_From Command : ${m.text}_
+_FROM PLUGINS_ : *${name}*
+_FROM SENDER_ : *${m.sender}*
+_FROM CHAT_ : *${m.chat}*
+_FROM COMMAND_ : *${m.text}*
 
 \`\`\`${format(e)}\`\`\`
 
@@ -1226,7 +1226,7 @@ ${global.namebot}
                     continue // Limit habis
                 }*/
                 if (plugin.level > _user.level) {
-                    this.reply(m.chat, `Required level ${plugin.level}to use this command\nYour level:* ${_user.level}`, m)
+                    this.reply(m.chat, `.المستوى المطلوب ${plugin.level} لاستخدام هذا الأمر\n*المستوى الخاص بك:* ${_user.level}`, m)
                     continue // If the level has not been reached
                 }
                 let extra = {
@@ -1271,13 +1271,13 @@ ${global.namebot}
                             for (let [jid] of global.owner.filter(([number, _, isDeveloper]) => isDeveloper && number)) {
                                 let data = (await this.onWhatsApp(jid))[0] || {}
                                 if (data.exists)
-                                    m.reply(`_SYSTEM REPORTS_
+                                    m.reply(`❲ _SYSTEM REPORTS_
                                     
-_From Plugins : ${m.plugin}_
-_From Sender : ${m.sender}_
-_From Chat : ${m.chat}_
-_From Command : ${usedPrefix}${command} ${args.join(' ')}_
-_ERROR LOG :_
+_FROM PLUGINS_ : *${m.plugin}*
+_FROM SENDER_ : *${m.sender}*
+_FROM CHAT_ : *${m.chat}*
+_FROM COMMAND_ : *${usedPrefix}${command}* *${args.join(' ')}*
+_ERROR LOG_ : 
 
 \`\`\`${text}\`\`\`
 
@@ -1607,10 +1607,10 @@ export async function groupsUpdate(groupsUpdate) {
         if (!id) continue
         let chats = global.db.data.chats[id], text = ''
         if (!chats?.detect) continue
-        if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || this.sDesc || '```The description has been changed to``` \n@desc').replace('@desc', groupUpdate.desc)
-        if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || this.sSubject || '```The subject has been changed to``` \n@subject').replace('@subject', groupUpdate.subject)
+        if (groupUpdate.desc) text = (chats.sDesc || this.sDesc || this.sDesc || '```The description has been changed to```\n@desc').replace('@desc', groupUpdate.desc)
+        if (groupUpdate.subject) text = (chats.sSubject || this.sSubject || this.sSubject || '```The topic has been changed to```\n@subject').replace('@subject', groupUpdate.subject)
         if (groupUpdate.icon) text = (chats.sIcon || this.sIcon || this.sIcon || '```The icon has been changed to```').replace('@icon', groupUpdate.icon)
-        if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || this.sRevoke || '```The group link has been changed to``` \n@revoke').replace('@revoke', groupUpdate.revoke)
+        if (groupUpdate.revoke) text = (chats.sRevoke || this.sRevoke || this.sRevoke || '```The group link has been changed to```\n@revoke').replace('@revoke', groupUpdate.revoke)
         if (!text) continue
         await this.sendMessage(id, { text: text })
     }
@@ -1647,21 +1647,21 @@ let name = this.getName(m.sender)
 let fkon = { key: { fromMe: false, participant: `${m.sender.split`@`[0]}@s.whatsapp.net`, ...(m.chat ? { remoteJid: '16504228206@s.whatsapp.net' } : {}) }, message: { contactMessage: { displayName: `${name}`, vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;a,;;;\nFN:${name}\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`}}}
 
 let msg = {
-        premium: 'Sorry, this feature can only be used by *Premium* users.',
-        group: 'This feature can only be used in groups and cannot be used in private chat. Maybe the bot owner configured the bot to work only in groups.',       
-        private: 'This feature can only be used in private chat.',       
-        botAdmin: 'Make the bot an admin so it can access the group features.',
-        admin: 'This feature will only work if both you and the bot are admins in the group.',
-        restrict: 'Restriction has not been enabled for this chat.',
-        adminonly: 'This feature has been disabled for members.',
-        premiumonly: `📢 You cannot access this feature ❗\nPurchase the premium version to gain access.\ncontact the owner below\nwa.me/${global.info.nomerown}`,
-        groups: 'This feature is currently available for groups only.',
-        gconly: `📢 You cannot access this feature ❗\nJoin the EMK BOT group to gain access.\n\n> ${global.url.sgc}`,
-        game: 'The *Game* feature has not been enabled for this chat.',
-        rpg: 'The *RPG* feature has not been enabled for this chat.',
-        rowner: 'This feature is only for the real owner, *users* cannot access it :!',
-        owner: 'This feature is only for the owner, *users* cannot access it :! or use it.',
-        mods: 'This feature is for moderators only.'
+        premium: 'Sorry, this feature can only be used by users.\n *Premium*',
+        group: 'This feature can only be used in groups and cannot be used in private chats; perhaps the bot owner designed the bot to work only in groups.',       
+        private: 'This feature can only be used in private.',       
+        botAdmin: 'Make the robot responsible, so it can access the group.',
+        admin: 'This feature will only work for you if you and the bot are both admins in the group.',
+        restrict: 'Restrictions are not enabled for this chat.',
+        adminonly: 'The feature has been disabled for members.',
+        premiumonly: `📢 You cannot access the feature ❗\n Purchase the premium version to access it via your computer.\ncontact the owner below\nwa.me/${global.info.nomerown}`,
+        groups: 'The feature is currently active for groups only.',
+        gconly: `📢 You cannot access the feature ❗\nJoin the EMK BOT group to gain access\n\n> ${global.url.sgc}`,
+        game: 'The *game* feature is not enabled for this chat.',
+        rpg: 'The *RPG* feature is not enabled for this chat.',
+        rowner: 'A feature exclusive to the rightful owner, *users* cannot access it!',
+        owner: 'This feature is exclusive to the owner and cannot be accessed or used by other users.',
+        mods: 'This feature is for administrators only.'
         }[type]
         
   if (msg) return this.sendMessage(m.chat, {
@@ -1677,12 +1677,11 @@ let msg = {
       }}}, { quoted: fkon})
         
     let daftar = {
-  unreg: `\`You are not registered in the database yet. Register immediately by typing:\`
+  unreg: `\You have not yet registered in the database. Register immediately by typing.\`
   
-- /daftar name. age\n\n Before pressing the register button, please make sure you are subscribed to my WhatsApp channel.\n\n https://whatsapp.com/channel/0029VajvgNv30LKQQnapiq02`
-}[type]
+- /daftar name. age\n\n Before you click the login button, please make sure you are subscribed to my WhatsApp channel. \n\n https://whatsapp.com/channel/0029VajvgNv30LKQQnapiq02`}[type]
   
-if (daftar) return this.sendUrlImageButton(m.chat, daftar, [{name: "quick_reply", buttonParamsJson: `{"display_text": "Register", "id": "@verify"}`}], wm, registrasi, fkon)
+  if (daftar) return this.sendUrlImageButton(m.chat, daftar, [{name: "quick_reply", buttonParamsJson: `{"display_text": "Log in", "id": "@verify"}`}], wm, registrasi, fkon)
         }
 
 function ucapan() {
